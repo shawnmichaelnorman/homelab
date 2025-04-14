@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8001:80/tcp"
+      - "8443:443/tcp"
+    environment:
+      TZ: "Etc/UTC" # Replace with your timezone
+      WEBPASSWORD: "password" # Change this password
+      FTLCONF_webserver_api_password: "password" #change this password
+    volumes:
+      - ./etc-pihole:/etc/pihole
+      - ./etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped

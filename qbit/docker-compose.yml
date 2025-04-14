@@ -1,0 +1,18 @@
+qbittorrent:
+    image: dyonr/qbittorrentvpn
+    restart: unless-stopped
+    privileged: true
+    volumes:
+        - /opt/projects/plex/qbittorrent:/config
+        - /mnt/share/Downloads:/downloads # Change this to your downloads directory
+    environment:
+        - PUID=0(root) # Change this to your user ID
+        - PGID=0(root) # Change this to your group ID
+        - VPN_ENABLED=yes
+        - VPN_TYPE=openvpn # Change this to wireguard if you want to use WireGuard
+        - LAN_NETWORK=10.0.0.0/24 # Change this to your LAN network
+        - NAME_SERVERS=8.8.8.8,10.0.0.51 # Optionally, change this to your preferred DNS servers
+        - ENABLE_SSL=no # Change this to yes if you want to use SSL
+        - HEALTH_CHECK_HOST=one.one.one.one # Optionally, change this to your preferred health check host
+    ports:
+        - 8080:8080

@@ -1,0 +1,20 @@
+version: "3"
+services:
+    plex:
+        image: lscr.io/linuxserver/plex:latest
+        container_name: plex
+        network_mode: bridge # Change this to bridge if you don't want Plex to run on your host network.
+        environment:
+            - PUID=0(root) # Change this to your user ID
+            - PGID=0(root) # Change this to your group ID
+            - TZ=Etc/UTC # Change this to your timezone
+            - VERSION=docker
+            - PLEX_CLAIM= #optional
+        volumes:
+            - /opt/projects/plex:/config
+            - /mnt/share/TV:/tv # Change this to your TV series directory
+            - /mnt/share/Movies:/movies # Change this to your movies directory
+        restart: unless-stopped
+        ports:
+            - 32400:32400/tcp
+            - 32469:32469/udp
